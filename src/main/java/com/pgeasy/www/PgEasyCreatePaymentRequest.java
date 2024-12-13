@@ -1,4 +1,4 @@
-package com.pgeasy.www.dto.request;
+package com.pgeasy.www;
 
 import lombok.Builder;
 
