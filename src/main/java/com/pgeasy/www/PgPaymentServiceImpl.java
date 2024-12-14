@@ -34,7 +34,7 @@ public class PgPaymentServiceImpl implements PgPaymentService {
 
     // 결제 승인
     public JSONObject approvePayment(ApprovePayment approvePayment) {
-        return sendRequest(approvePayment.baseApprovePayment(), approvePayment.secretKey(), getApprovePaymentUrl(approvePayment.paymentCompany()), approvePayment.paymentCompany());
+        return sendRequest(approvePayment.getBaseApprovePayment(), approvePayment.getSecretKey(), getApprovePaymentUrl(approvePayment.getPaymentCompany()), approvePayment.getPaymentCompany());
     }
 
     private String getApprovePaymentUrl(PaymentCompany paymentCompany) {
