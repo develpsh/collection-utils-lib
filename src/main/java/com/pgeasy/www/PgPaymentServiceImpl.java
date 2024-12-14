@@ -1,5 +1,6 @@
 package com.pgeasy.www;
 
+import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -13,11 +14,11 @@ import java.util.Base64;
 @Slf4j
 public class PgPaymentServiceImpl implements PgPaymentService {
     // 결제 모듈창
-    public JSONObject createModule(JSONObject jsonObject, String secretKey, PaymentCompany paymentCompany) {
-        return sendRequest(jsonObject, secretKey, getCreateModule(paymentCompany), paymentCompany);
+    public JSONObject paymentModule(JSONObject jsonObject, String secretKey, PaymentCompany paymentCompany) {
+        return sendRequest(jsonObject, secretKey, getCreateModuleUrl(paymentCompany), paymentCompany);
     }
 
-    private String getCreateModule(PaymentCompany paymentCompany) {
+    private String getCreateModuleUrl(PaymentCompany paymentCompany) {
         if (PaymentCompany.KAKAO == paymentCompany) {
             return "https://open-api.kakaopay.com/online/v1/payment/ready";
         }
@@ -27,8 +28,12 @@ public class PgPaymentServiceImpl implements PgPaymentService {
     }
 
     // 결제 승인
-    public JSONObject approvePayment(JSONObject jsonObject, String secretKey, PaymentCompany paymentCompany) {
-        return sendRequest(jsonObject, secretKey, getApprovePaymentUrl(paymentCompany), paymentCompany);
+//    public JSONObject approvePayment(JSONObject jsonObject, String secretKey, PaymentCompany paymentCompany) {
+//        return sendRequest(jsonObject, secretKey, getApprovePaymentUrl(paymentCompany), paymentCompany);
+//    }
+    public JSONObject approvePayment(ApprovePayment approvePayment) {
+        log.info("Request Data: {}", approvePayment);
+        return null;
     }
 
     private String getApprovePaymentUrl(PaymentCompany paymentCompany) {
