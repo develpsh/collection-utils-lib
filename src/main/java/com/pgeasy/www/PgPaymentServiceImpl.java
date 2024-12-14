@@ -5,10 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.io.*;
-import java.net.HttpURLConnection;
 import java.net.URI;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -21,7 +18,9 @@ public class PgPaymentServiceImpl implements PgPaymentService {
 
     // 결제 모듈창
     public JSONObject paymentModule(JSONObject jsonObject, String secretKey, PaymentCompany paymentCompany) {
+//    public JSONObject paymentModule(ApprovePayment approvePayment) {
 //        return sendRequest(jsonObject, secretKey, getCreateModuleUrl(paymentCompany), paymentCompany);
+//        return sendRequest(approvePayment.baseApprovePayment(), approvePayment.secretKey(), getApprovePaymentUrl(approvePayment.paymentCompany()), approvePayment.paymentCompany());
         return null;
     }
 
