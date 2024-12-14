@@ -5,6 +5,6 @@ import lombok.Builder;
 @Builder
 public class TossPayApprovePayment implements BaseApprovePayment {
     private String paymentKey;
-    private Long orderId;
+    private String orderId;
     private Integer amount;
 }

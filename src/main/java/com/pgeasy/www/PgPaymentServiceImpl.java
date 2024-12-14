@@ -35,17 +35,17 @@ public class PgPaymentServiceImpl implements PgPaymentService {
         return null;
     }
 
-    private String getApprovePaymentUrl(PaymentCompany paymentCompany) {
-        if (PaymentCompany.TOSS == paymentCompany) {
-            return "https://api.tosspayments.com/v1/payments/confirm";
-        }
-        else if (PaymentCompany.KAKAO == paymentCompany) {
-            return "https://open-api.kakaopay.com/online/v1/payment/approve";
-        }
-        else {
-            return "";
-        }
-    }
+//    private String getApprovePaymentUrl(PaymentCompany paymentCompany) {
+//        if (PaymentCompany.TOSS == paymentCompany) {
+//            return "https://api.tosspayments.com/v1/payments/confirm";
+//        }
+//        else if (PaymentCompany.KAKAO == paymentCompany) {
+//            return "https://open-api.kakaopay.com/online/v1/payment/approve";
+//        }
+//        else {
+//            return "";
+//        }
+//    }
 
     private JSONObject sendRequest(JSONObject requestData, String secretKey, String urlString, PaymentCompany paymentCompany)  {
         HttpURLConnection connection = createConnection(secretKey, urlString, paymentCompany);
