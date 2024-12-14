@@ -22,9 +22,9 @@ dependencies {
 }
 
 java {
-    // Java 17 설정 (Java 16 이상 필요)
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(17))
+        vendor.set(JvmVendorSpec.ADOPT_OPENJDK)
     }
 }
 
