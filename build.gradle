@@ -5,6 +5,12 @@ plugins {
 group = 'com.pgeasy.www'
 version = '1.0-SNAPSHOT'
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}
+
 repositories {
     mavenCentral()
 }
