@@ -14,8 +14,7 @@ import java.util.Base64;
 public class PgPaymentServiceImpl implements PgPaymentService {
     // 결제 모듈창
     public JSONObject createModule(JSONObject jsonObject, String secretKey, PaymentCompany paymentCompany) {
-        String url = getCreateModule(paymentCompany);
-        return sendRequest(jsonObject, secretKey, url, paymentCompany);
+        return sendRequest(jsonObject, secretKey, getCreateModule(paymentCompany), paymentCompany);
     }
 
     private String getCreateModule(PaymentCompany paymentCompany) {
@@ -29,8 +28,7 @@ public class PgPaymentServiceImpl implements PgPaymentService {
 
     // 결제 승인
     public JSONObject approvePayment(JSONObject jsonObject, String secretKey, PaymentCompany paymentCompany) {
-        String url = getApprovePaymentUrl(paymentCompany);
-        return sendRequest(jsonObject, secretKey, url, paymentCompany);
+        return sendRequest(jsonObject, secretKey, getApprovePaymentUrl(paymentCompany), paymentCompany);
     }
 
     private String getApprovePaymentUrl(PaymentCompany paymentCompany) {
