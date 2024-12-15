@@ -1,7 +1,6 @@
 package com.pgeasy.www;
 
 import lombok.Builder;
-import lombok.Getter;
 
 @Builder
 public class KaKaoPaymentModule implements BasePaymentModule {
@@ -10,6 +9,7 @@ public class KaKaoPaymentModule implements BasePaymentModule {
     private Long partner_order_id;
     private String partner_user_id;
     private String item_name;
+    private Integer quantity;
     private Integer total_amount;
     private Integer tax_free_amount;
     private String approval_url;
@@ -31,8 +31,27 @@ public class KaKaoPaymentModule implements BasePaymentModule {
         return KaKaoPaymentModule.Result.class;
     }
 
-    @Getter
-    public static class Result implements BaseResult {
-
+    public record Result(
+            String next_redirect_pc_url,
+            String next_redirect_mobile_url,
+            String next_redirect_app_url,
+            String created_at,
+            String ios_app_scheme,
+            String android_app_scheme,
+            boolean tms_result,
+            String tid) implements BaseResult {
+        @Override
+        public String toString() {
+            return "Result{" +
+                    "next_redirect_pc_url='" + next_redirect_pc_url + '\'' +
+                    ", next_redirect_mobile_url='" + next_redirect_mobile_url + '\'' +
+                    ", next_redirect_app_url='" + next_redirect_app_url + '\'' +
+                    ", created_at='" + created_at + '\'' +
+                    ", ios_app_scheme='" + ios_app_scheme + '\'' +
+                    ", android_app_scheme='" + android_app_scheme + '\'' +
+                    ", tms_result=" + tms_result +
+                    ", tid='" + tid + '\'' +
+                    '}';
+        }
     }
 }

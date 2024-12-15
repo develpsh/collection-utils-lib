@@ -1,7 +1,6 @@
 package com.pgeasy.www;
 
 import org.json.simple.JSONObject;
-import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileInputStream;
@@ -22,6 +21,30 @@ class PgPaymentServiceImplTest {
     }
 
     @Test
+    void paymentModule_kaKao() {
+        String secretKey = properties.getProperty("kakao-secret-key");
+        PaymentModule paymentModule =
+                PaymentModule.builder()
+                             .secretKey(secretKey)
+                             .basePaymentModule(KaKaoPaymentModule.builder()
+                                                                  .cid("TC0ONETIME")
+                                                                  .partner_order_id(1L)
+                                                                  .partner_user_id("user1")
+                                                                  .item_name("Coffee")
+                                                                  .quantity(1)
+                                                                  .total_amount(5000)
+                                                                  .tax_free_amount(0)
+                                                                  .approval_url("http://localhost:8080/kakao/payment/approve/1")
+                                                                  .cancel_url("http://localhost:8080/kakao/payment/cancel")
+                                                                  .fail_url("http://localhost:8080/kakao/payment/fail")
+                                                                  .build())
+                             .build();
+        CommonResponse<BaseResult> commonResponse = pgPaymentService.paymentModule(paymentModule);
+        KaKaoPaymentModule.Result data = (KaKaoPaymentModule.Result) commonResponse.data();
+        System.out.println(data);
+    }
+
+    @Test
     void createPayment_toss() {
         String secretKey = properties.getProperty("toss-widget-secret-key");
         ApprovePayment approvePayment =
@@ -29,17 +52,17 @@ class PgPaymentServiceImplTest {
                               .secretKey(secretKey)
                               .baseApprovePayment(
                                       TossPayApprovePayment.builder()
-                                                           .paymentKey("tgen_20241215202745gMAW2")
-                                                           .orderId("MC40MzAwMjk0MDAzOTIx")
+                                                           .paymentKey("tgen_20241215221803hrQz7")
+                                                           .orderId("MC4yOTM4NTkwMDMxMDg3")
                                                            .amount(50000)
                                                            .build())
                               .build();
-        CommonResponse<?> commonResponse = pgPaymentService.approvePayment(approvePayment);
+        CommonResponse<BaseResult> commonResponse = pgPaymentService.approvePayment(approvePayment);
         System.out.println(commonResponse);
     }
 
     @Test
-    void mapToPaymentClass() throws ParseException {
+    void mapToPaymentClass() {
         String jsonString = """
                 {
                   "country" : "KR",
