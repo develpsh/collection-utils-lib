@@ -3,17 +3,16 @@ package com.pgeasy.www;
 import lombok.Builder;
 
 @Builder
-public class CommonResponse<T> {
-    private Integer code;
-    private String message;
-    private T data;
-
+public record CommonResponse<T>(Integer code, String message, T data) {
     @Override
     public String toString() {
-        return "CommonResponse{" +
-                "code=" + code +
-                ", message='" + message + '\'' +
-                ", data=" + data +
-                '}';
+        return
+               """
+               CommonResponse{
+               code=%s,
+               message='%s',
+               data=%s
+               }
+               """.formatted(code, message, data);
     }
 }
