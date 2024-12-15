@@ -62,6 +62,25 @@ class PgPaymentServiceImplTest {
     }
 
     @Test
+    void createPayment_kaKao() {
+        String secretKey = properties.getProperty("kakao-secret-key");
+        ApprovePayment approvePayment =
+                ApprovePayment.builder()
+                        .secretKey(secretKey)
+                        .baseApprovePayment(
+                                KaKaoPayApprovePayment.builder()
+                                        .cid("TC0ONETIME")
+                                        .tid("T75ede9b555964df336f")
+                                        .partner_order_id("1")
+                                        .partner_user_id("user1")
+                                        .pg_token("edae3fce3d1583046355")
+                                        .build())
+                        .build();
+        CommonResponse<BaseResult> commonResponse = pgPaymentService.approvePayment(approvePayment);
+        System.out.println(commonResponse);
+    }
+
+    @Test
     void mapToPaymentClass() {
         String jsonString = """
                 {
@@ -112,8 +131,8 @@ class PgPaymentServiceImplTest {
                   "status" : "DONE"
                 }
                 """;
-        BasePayment basePayment = TossPayApprovePayment.builder().build();
         JSONObject jsonObject = pgPaymentService.processStringToJson(jsonString);
-        pgPaymentService.processMapToPaymentClass(jsonObject, basePayment.getResultClass());
+        BaseApprovePayment build = TossPayApprovePayment.builder().build();
+        pgPaymentService.processMapToPaymentClass(jsonObject, build.getResultClass());
     }
 }

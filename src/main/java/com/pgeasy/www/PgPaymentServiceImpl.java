@@ -46,6 +46,7 @@ public class PgPaymentServiceImpl implements PgPaymentService {
 
             int statusCode = response.statusCode();
             JSONObject responseBody = processStringToJson(response.body());
+            log.info("responseBody : {}", responseBody);
 
             return CommonResponse.<BaseResult>builder()
                                  .code(response.statusCode())

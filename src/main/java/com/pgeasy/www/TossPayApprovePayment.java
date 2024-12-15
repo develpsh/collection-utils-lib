@@ -75,5 +75,7 @@ public class TossPayApprovePayment implements BaseApprovePayment {
 
         public record Checkout(String url) {
         }
+
+
     }
 }

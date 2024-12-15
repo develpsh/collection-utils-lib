@@ -27,7 +27,7 @@ public class KaKaoPaymentModule implements BasePaymentModule {
     }
 
     @Override
-    public Class<? extends Result> getResultClass() {
+    public Class<Result> getResultClass() {
         return KaKaoPaymentModule.Result.class;
     }
 

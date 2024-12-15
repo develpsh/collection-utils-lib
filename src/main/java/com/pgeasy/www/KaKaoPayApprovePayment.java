@@ -1,7 +1,6 @@
 package com.pgeasy.www;
 
 import lombok.Builder;
-import lombok.Getter;
 
 @Builder
 public class KaKaoPayApprovePayment implements BaseApprovePayment {
@@ -24,11 +23,51 @@ public class KaKaoPayApprovePayment implements BaseApprovePayment {
 
     @Override
     public Class<Result> getResultClass() {
-        return null;
+        return KaKaoPayApprovePayment.Result.class;
     }
 
-    @Getter
-    public static class Result implements BaseResult {
+    public record Result(
+            String payment_method_type,
+            String item_code,
+            Amount amount,
+            Long quantity,
+            String created_at,
+            String item_name,
+            String tid,
+            String sequential_payment_methods,
+            String sid,
+            String partner_order_id,
+            String payload,
+            String approved_at,
+            String partner_user_id,
+            String aid,
+            CardInfo card_info,
+            String cid) implements BaseResult {
+        public record Amount(
+                int total,
+                int tax_free,
+                int vat,
+                int discount,
+                int point,
+                int green_deposit) {
+        }
 
+        public record CardInfo(
+                String purchase_corp,
+                String purchase_corp_code,
+                String issuing_corp,
+                String issuing_corp_code,
+                String kakaopay_purchase_corp,
+                String kakaopay_purchase_corp_code,
+                String kakaopay_issuing_corp,
+                String kakaopay_issuing_corp_code,
+                String bin,
+                String card_type,
+                String install_month,
+                String approved_id,
+                String card_mid,
+                String interest_free_install,
+                String card_item_code) {
+        }
     }
 }
