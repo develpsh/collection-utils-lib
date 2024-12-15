@@ -91,6 +91,6 @@ class PgPaymentServiceImplTest {
                 """;
         BasePayment basePayment = TossPayApprovePayment.builder().build();
         JSONObject jsonObject = pgPaymentService.processStringToJson(jsonString);
-        pgPaymentService.mapToPaymentClass(jsonObject, basePayment.getResultClass());
+        pgPaymentService.processMapToPaymentClass(jsonObject, basePayment.getResultClass());
     }
 }

@@ -1,7 +1,7 @@
 package com.pgeasy.www;
 
-public interface BasePayment {
+public interface BasePayment<T> {
     String getApiUrl();
     String getAuthorization(String secretKey);
-    Class<? extends TossPayApprovePayment.Result> getResultClass();
+    Class<BaseResult> getResultClass();
 }

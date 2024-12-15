@@ -1,6 +1,7 @@
 package com.pgeasy.www;
 
 import lombok.Builder;
+import lombok.Getter;
 
 @Builder
 public class KaKaoPayApprovePayment implements BaseApprovePayment {
@@ -22,7 +23,12 @@ public class KaKaoPayApprovePayment implements BaseApprovePayment {
     }
 
     @Override
-    public Class<? extends TossPayApprovePayment.Result> getResultClass() {
+    public Class<Result> getResultClass() {
         return null;
+    }
+
+    @Getter
+    public static class Result implements BaseResult {
+
     }
 }

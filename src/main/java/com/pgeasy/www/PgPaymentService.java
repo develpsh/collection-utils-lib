@@ -1,10 +1,6 @@
 package com.pgeasy.www;
 
-import org.json.simple.JSONObject;
-
 public interface PgPaymentService {
-//    JSONObject paymentModule(PaymentModule paymentModule);
-    CommonResponse<?> paymentModule(PaymentModule paymentModule);
-//    JSONObject approvePayment(ApprovePayment approvePayment);
-    CommonResponse<?> approvePayment(ApprovePayment approvePayment);
+    CommonResponse<BaseResult> paymentModule(PaymentModule paymentModule);
+    CommonResponse<BaseResult> approvePayment(ApprovePayment approvePayment);
 }

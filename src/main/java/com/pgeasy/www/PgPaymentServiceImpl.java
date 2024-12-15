@@ -19,7 +19,7 @@ public class PgPaymentServiceImpl implements PgPaymentService {
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
     // 결제 모듈창
-    public CommonResponse<?> paymentModule(PaymentModule paymentModule) {
+    public CommonResponse<BaseResult> paymentModule(PaymentModule paymentModule) {
         BasePaymentModule basePaymentModule = paymentModule.basePaymentModule();
         return sendRequest(
                 basePaymentModule,
@@ -28,7 +28,7 @@ public class PgPaymentServiceImpl implements PgPaymentService {
     }
 
     // 결제 승인
-    public CommonResponse<?> approvePayment(ApprovePayment approvePayment) {
+    public CommonResponse<BaseResult> approvePayment(ApprovePayment approvePayment) {
         BaseApprovePayment baseApprovePayment = approvePayment.baseApprovePayment();
         return sendRequest(
                 baseApprovePayment,
@@ -36,7 +36,7 @@ public class PgPaymentServiceImpl implements PgPaymentService {
         );
     }
 
-    private CommonResponse<?> sendRequest(BasePayment baseApprovePayment, String authorization) {
+    private CommonResponse<BaseResult> sendRequest(BasePayment<?> baseApprovePayment, String authorization) {
         try {
             HttpRequest request = createHttpRequest(baseApprovePayment, authorization);
             log.info("HttpRequest : {}", request);
@@ -47,7 +47,7 @@ public class PgPaymentServiceImpl implements PgPaymentService {
             int statusCode = response.statusCode();
             JSONObject responseBody = processStringToJson(response.body());
 
-            return CommonResponse.builder()
+            return CommonResponse.<BaseResult>builder()
                                  .code(response.statusCode())
                                  .message(getMessage(statusCode, responseBody))
                                  .data(getData(statusCode, responseBody, baseApprovePayment.getResultClass()))
@@ -71,15 +71,15 @@ public class PgPaymentServiceImpl implements PgPaymentService {
         return 200 == statusCode ? "OK" : (String) responseBody.get("message");
     }
 
-    private BaseResult getData(int statusCode, JSONObject responseBody, Class<? extends TossPayApprovePayment.Result> resultClass) {
+    private BaseResult getData(int statusCode, JSONObject responseBody, Class<BaseResult> resultClass) {
         if (200 != statusCode) {
             return null;
         }
 
-        return mapToPaymentClass(responseBody, resultClass);
+        return processMapToPaymentClass(responseBody, resultClass);
     }
 
-    public <T> T mapToPaymentClass(JSONObject responseBody, Class<T> targetClass) {
+    public BaseResult processMapToPaymentClass(JSONObject responseBody, Class<BaseResult> targetClass) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); // 인식 못하는 필드는 무시
 
@@ -91,7 +91,7 @@ public class PgPaymentServiceImpl implements PgPaymentService {
         }
     }
 
-    private HttpRequest createHttpRequest(BasePayment basePayment, String authorization) {
+    private HttpRequest createHttpRequest(BasePayment<?> basePayment, String authorization) {
         return HttpRequest.newBuilder()
                           .uri(URI.create(basePayment.getApiUrl()))
                           .header("Authorization", authorization)

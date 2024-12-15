@@ -3,7 +3,6 @@ package com.pgeasy.www;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -27,7 +26,7 @@ public class TossPayApprovePayment implements BaseApprovePayment {
     }
 
     @Override
-    public Class<? extends Result> getResultClass() {
+    public Class<Result> getResultClass() {
         return TossPayApprovePayment.Result.class;
     }
 
