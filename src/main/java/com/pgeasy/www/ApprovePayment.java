@@ -3,6 +3,6 @@ package com.pgeasy.www;
 import lombok.Builder;
 
 @Builder
-public record ApprovePayment(PaymentCompany paymentCompany, String secretKey, BaseApprovePayment baseApprovePayment) {
+public record ApprovePayment(String secretKey, BaseApprovePayment baseApprovePayment) {
 
 }

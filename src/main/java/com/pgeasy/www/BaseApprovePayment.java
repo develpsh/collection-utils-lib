@@ -1,5 +1,5 @@
 package com.pgeasy.www;
 
-public interface BaseApprovePayment {
+public interface BaseApprovePayment extends BasePayment {
 
 }
