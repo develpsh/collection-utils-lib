@@ -91,7 +91,7 @@ private ApprovePayment createApprovePayment(String orderId, String pgToken) {
                          .build();
 }
 ```
-### 4. 라이센스
+## 라이센스
 MIT License
 
 Copyright (c) 2024 Backend Engineer
