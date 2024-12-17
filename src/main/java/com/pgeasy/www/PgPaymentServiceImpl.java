@@ -21,19 +21,34 @@ public class PgPaymentServiceImpl implements PgPaymentService {
     // 결제 모듈창
     public CommonResponse<BaseResult> paymentModule(PaymentModule paymentModule) {
         BasePaymentModule basePaymentModule = paymentModule.basePaymentModule();
-        return sendRequest(
-                basePaymentModule,
-                basePaymentModule.getAuthorization(paymentModule.secretKey())
-        );
+        return sendRequest(basePaymentModule, basePaymentModule.getAuthorization(paymentModule.secretKey()));
     }
 
     // 결제 승인
     public CommonResponse<BaseResult> approvePayment(ApprovePayment approvePayment) {
         BaseApprovePayment baseApprovePayment = approvePayment.baseApprovePayment();
-        return sendRequest(
-                baseApprovePayment,
-                baseApprovePayment.getAuthorization(approvePayment.secretKey())
-        );
+        return sendRequest(baseApprovePayment, baseApprovePayment.getAuthorization(approvePayment.secretKey()));
+    }
+
+    // 결제 결과 callback
+    public void handlePaymentCallback() {
+        // Implementation here
+    }
+
+    // 가맹점 승인
+    public void approveMerchant() {
+        // Implementation here
+    }
+
+    // 결제 환불
+    public void refundPayment() {
+        // Implementation here
+    }
+
+    // 결제 상태 확인
+    public PaymentStatus checkPaymentStatus() {
+        // Implementation here
+        return null;
     }
 
     private CommonResponse<BaseResult> sendRequest(BasePayment<?> baseApprovePayment, String authorization) {
@@ -54,16 +69,16 @@ public class PgPaymentServiceImpl implements PgPaymentService {
                                  .data(getData(statusCode, responseBody, baseApprovePayment.getResultClass()))
                                  .build();
         } catch (Exception e) {
-            log.error("sendRequest Exception : {}", e.getMessage(), e);
+            log.error("sendRequest() Exception : {}", e.getMessage(), e);
             throw new RuntimeException("Exception: ", e);
         }
     }
 
-    public JSONObject processStringToJson(String body) {
+    private JSONObject processStringToJson(String body) {
         try {
             return (JSONObject) new JSONParser().parse(body);
         } catch (ParseException e) {
-            log.error("processStringToJson Exception: {}", e.getMessage(), e);
+            log.error("processStringToJson() Exception: {}", e.getMessage(), e);
             throw new RuntimeException("Exception: ", e);
         }
     }
@@ -91,14 +106,14 @@ public class PgPaymentServiceImpl implements PgPaymentService {
         return processMapToPaymentClass(responseBody, resultClass);
     }
 
-    public BaseResult processMapToPaymentClass(JSONObject responseBody, Class<BaseResult> targetClass) {
+    private BaseResult processMapToPaymentClass(JSONObject responseBody, Class<BaseResult> targetClass) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); // 인식 못하는 필드는 무시
 
         try {
             return objectMapper.readValue(responseBody.toJSONString(), targetClass);
         } catch (JsonProcessingException e) {
-            log.error("mapToPaymentClass Exception: {}", e.getMessage(), e);
+            log.error("processMapToPaymentClass() Exception: {}", e.getMessage(), e);
             throw new RuntimeException("Exception: ", e);
         }
     }
@@ -110,26 +125,5 @@ public class PgPaymentServiceImpl implements PgPaymentService {
                           .header("Content-Type", "application/json")
                           .POST(HttpRequest.BodyPublishers.ofString(new Gson().toJson(basePayment)))
                           .build();
-    }
-
-    // 결제 결과 callback
-    public void handlePaymentCallback() {
-        // Implementation here
-    }
-
-    // 가맹점 승인
-    public void approveMerchant() {
-        // Implementation here
-    }
-
-    // 결제 환불
-    public void refundPayment() {
-        // Implementation here
-    }
-
-    // 결제 상태 확인
-    public PaymentStatus checkPaymentStatus() {
-        // Implementation here
-        return null;
     }
 }

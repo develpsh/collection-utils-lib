@@ -6,13 +6,10 @@ import lombok.Builder;
 public record CommonResponse<T>(Integer code, String message, T data) {
     @Override
     public String toString() {
-        return
-               """
-               CommonResponse{
-               code=%s,
-               message='%s',
-               data=%s
-               }
-               """.formatted(code, message, data);
+        return "CommonResponse{" +
+                "code=" + code +
+                ", message='" + message + '\'' +
+                ", data=" + data +
+                '}';
     }
 }
