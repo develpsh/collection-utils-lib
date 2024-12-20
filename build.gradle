@@ -8,6 +8,7 @@
 plugins {
     // Apply the java-library plugin for API and implementation separation.
     id 'java-library'
+    id 'maven-publish'
 }
 
 group = 'ic.oss'
@@ -37,5 +38,40 @@ test {
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            pom {
+                name.set("collection-utils-lib")
+                description.set("Java Collection Utility library")
+                url.set("https://github.com/develpsh/collection-utils-lib")
+
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        url.set("https://opensource.org/licenses/MIT")
+                    }
+                }
+
+                developers {
+                    developer {
+                        id.set("develpsh")
+                        name.set("박수현")
+                        email.set("bshyun1199@gmail.com")
+                    }
+                }
+
+                scm {
+                    connection.set("scm:git:git://github.com/develpsh/collection-utils-lib.git")
+                    developerConnection.set("scm:git:ssh://git@github.com:develpsh/collection-utils-lib.git")
+                    url.set("https://github.com/develpsh/collection-utils-lib")
+                }
+            }
+        }
     }
 }
