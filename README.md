@@ -8,29 +8,42 @@ assignees: ''
 
 ## 프로젝트 이름
 
-프로젝트 이름을 남겨주세요
+자바 컬렉션 유틸리티 라이브러리
 
 ## 개요
 
-프로젝트에 관한 설명을 작성합니다.
+자바에서 자주 사용하는 컬렉션을 좀 더 편하게 다룰 수 있도록 돕는 라이브러리입니다. 이 라이브러리는 가독성과 생산성을 향상시키기 위해 유틸리티 메서드를 제공합니다.
 
-## 저장소 주소
+## 설치 방법
 
-저장소 링크를 남겨주세요.
+1. Maven 사용 시
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
 
-## 체크리스트
+<dependency>
+    <groupId>com.github.develpsh</groupId>
+    <artifactId>collection-utils-lib</artifactId>
+    <version>v1.0.0</version>
+</dependency>
+```
 
-- [ ] 개인 저장소 생성
-- [ ] README.md 파일 작성 (다음 항목 포함)
-  - [ ] 프로젝트 개요
-  - [ ] 설치 방법 / 사용 방법
-    - [ ] 가능하다면 동영상이나 animated gif 첨부
-  - [ ] 라이선스 표기
-- [ ] 기능 구현
-  - [ ] 여기에 구현할 기능을 입력합니다.
-- [ ] 테스트 추가 (라인 커버리지 60% 이상)
-- [ ] 사용 예제 프로젝트 추가 (examples 폴더 아래에 2개 이상)
-- [ ] 라이브러리 퍼블리싱
-- [ ] CI 설정
-  - [ ] PR에 등록되었을 때 테스트 실행
-  - [ ] main 프로젝트에 머지되었을 때 라이브러리 퍼블리싱
+2. Gradle 사용 시 build.gradle에 아래 내용을 추가
+
+```xml
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+dependencies {
+    implementation 'com.github.develpsh:collection-utils-lib:v1.0.0'
+}
+```
