@@ -28,6 +28,15 @@ public class CollectionUtilsTest {
     }
 
     @Test
+    public void testListToArray() {
+        List<String> list = List.of("a", "b", "c", "d");
+        String[] strings = CollectionUtils.listToArray(list, new String[list.size()]);
+        for (int i = 0; i < list.size(); i++) {
+            assertEquals(list.get(i), strings[i]);
+        }
+    }
+
+    @Test
     public void testListToSet() {
         List<String> list = Arrays.asList("a", "b", "c", "a");
         Set<String> set = CollectionUtils.listToSet(list);
